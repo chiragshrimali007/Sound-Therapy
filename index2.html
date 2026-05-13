@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Inner Worth Wellness | Himalayan Healing Experience</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Poppins:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #0f0b14;
+            color: white;
+            overflow-x: hidden;
+        }
+
+        /* Animated Background */
+
+        .bg {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            z-index: -5;
+            overflow: hidden;
+            background:
+                radial-gradient(circle at top, #3b245f 0%, #140f1f 45%, #09060d 100%);
+        }
+
+        .stars {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-image:
+                radial-gradient(white 1px, transparent 1px);
+            background-size: 60px 60px;
+            opacity: .18;
+            animation: moveStars 80s linear infinite;
+        }
+
+        @keyframes moveStars {
+            from {
+                transform: translateY(0);
+            }
+
+            to {
+                transform: translateY(-1000px);
+            }
+        }
+
+        .mountain {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            opacity: .28;
+        }
+
+        /* Floating Orbs */
+
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(8px);
+            animation: float 8s ease-in-out infinite;
+        }
+
+        .orb1 {
+            width: 180px;
+            height: 180px;
+            background: #d7b4ff;
+            top: 10%;
+            left: 5%;
+        }
+
+        .orb2 {
+            width: 250px;
+            height: 250px;
+            background: #ffcba6;
+            bottom: 15%;
+            right: 10%;
+            animation-delay: 2s;
+        }
+
+        .orb3 {
+            width: 120px;
+            height: 120px;
+            background: #fff0b8;
+            top: 50%;
+            right: 25%;
+            animation-delay: 4s;
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-30px);
+            }
+        }
+
+        /* Hero Section */
+
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 40px 20px;
+            position: relative;
+        }
+
+        .glass {
+            width: 100%;
+            max-width: 1100px;
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(18px);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 30px;
+            padding: 60px 40px;
+            box-shadow: 0 0 40px rgba(0, 0, 0, 0.4);
+            transform-style: preserve-3d;
+            transition: 0.4s ease;
+        }
+
+        .glass:hover {
+            transform: rotateX(4deg) rotateY(-4deg) scale(1.01);
+        }
+
+        .tag {
+            color: #f7d7a8;
+            letter-spacing: 3px;
+            margin-bottom: 20px;
+            font-size: 14px;
+            text-transform: uppercase;
+        }
+
+        h1 {
+            font-family: 'Cinzel', serif;
+            font-size: 72px;
+            line-height: 1.2;
+            margin-bottom: 25px;
+            background: linear-gradient(to right, #fff, #f7d8b4, #f3e7ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .subtitle {
+            max-width: 760px;
+            margin: auto;
+            color: #e7dff5;
+            line-height: 1.9;
+            font-size: 18px;
+            margin-bottom: 35px;
+        }
+
+        /* Event Cards */
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+            margin-top: 45px;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.07);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 24px;
+            padding: 28px;
+            transition: 0.4s;
+            transform-style: preserve-3d;
+        }
+
+        .card:hover {
+            transform: translateY(-10px) rotateX(5deg);
+            background: rgba(255, 255, 255, 0.12);
+            box-shadow: 0 10px 30px rgba(255, 215, 160, .15);
+        }
+
+        .card h3 {
+            color: #f6d6ab;
+            margin-bottom: 10px;
+            font-size: 20px;
+        }
+
+        .card p {
+            color: #eee;
+            line-height: 1.6;
+        }
+
+        /* Price */
+
+        .price-box {
+            margin-top: 50px;
+            padding: 35px;
+            border-radius: 30px;
+            background: linear-gradient(135deg,
+                    rgba(255, 235, 210, .12),
+                    rgba(255, 255, 255, .05));
+            border: 1px solid rgba(255, 255, 255, .1);
+        }
+
+        .old {
+            text-decoration: line-through;
+            color: #c9b2a0;
+            font-size: 28px;
+        }
+
+        .new {
+            font-size: 70px;
+            color: #ffe7bb;
+            font-weight: 700;
+            text-shadow: 0 0 20px rgba(255, 215, 170, .35);
+        }
+
+        /* Benefits */
+
+        .benefits {
+            margin-top: 60px;
+        }
+
+        .benefits h2 {
+            font-family: 'Cinzel', serif;
+            font-size: 42px;
+            margin-bottom: 30px;
+            color: #fff0d0;
+        }
+
+        .benefit-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+        }
+
+        .benefit {
+            padding: 25px;
+            border-radius: 22px;
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            transition: 0.4s;
+        }
+
+        .benefit:hover {
+            transform: scale(1.05);
+            background: rgba(255, 255, 255, 0.11);
+        }
+
+        .benefit span {
+            font-size: 34px;
+            display: block;
+            margin-bottom: 15px;
+        }
+
+        /* CTA */
+
+        .cta {
+            margin-top: 70px;
+        }
+
+        .cta a {
+            display: inline-block;
+            padding: 18px 42px;
+            border-radius: 60px;
+            background: linear-gradient(to right, #ffd6a4, #f8f1ff);
+            color: #24152f;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 18px;
+            transition: 0.4s;
+            box-shadow: 0 10px 30px rgba(255, 214, 164, .3);
+        }
+
+        .cta a:hover {
+            transform: translateY(-5px) scale(1.03);
+        }
+
+        /* Footer */
+
+        footer {
+            text-align: center;
+            padding: 50px 20px 80px;
+            color: #dbcff0;
+        }
+
+        footer h3 {
+            font-family: 'Cinzel', serif;
+            font-size: 34px;
+            margin-bottom: 10px;
+            color: #fff2d0;
+        }
+
+        /* Responsive */
+
+        @media(max-width:768px) {
+
+            h1 {
+                font-size: 42px;
+            }
+
+            .subtitle {
+                font-size: 16px;
+            }
+
+            .new {
+                font-size: 52px;
+            }
+
+            .glass {
+                padding: 40px 25px;
+            }
+
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="bg">
+        <div class="stars"></div>
+
+        <div class="orb orb1"></div>
+        <div class="orb orb2"></div>
+        <div class="orb orb3"></div>
+
+        <svg class="mountain" viewBox="0 0 1440 320">
+            <path fill="#ffffff" fill-opacity="0.08"
+                d="M0,288L80,245.3C160,203,320,117,480,117.3C640,117,800,203,960,208C1120,213,1280,139,1360,101.3L1440,64L1440,320L0,320Z">
+            </path>
+        </svg>
+
+    </div>
+
+    <section class="hero">
+
+        <div class="glass">
+
+            <div class="tag">
+                ✨ Himalayan Healing Experience ✨
+            </div>
+
+            <h1>
+                Sound Therapy <br>
+                & Progressive <br>
+                Muscle Relaxation
+            </h1>
+
+            <p class="subtitle">
+                For the very first time in Jodhpur, immerse yourself in a deeply calming spiritual healing journey
+                inspired by the peaceful Himalayan energy. Release stress, reconnect with inner peace, and restore
+                emotional balance through sacred sound vibrations and guided relaxation.
+            </p>
+
+            <div class="info-grid">
+
+                <div class="card">
+                    <h3>🗓 Session Date</h3>
+                    <p>17th May</p>
+                </div>
+
+                <div class="card">
+                    <h3>⏰ Time</h3>
+                    <p>8:30 PM – 10:30 PM</p>
+                </div>
+
+                <div class="card">
+                    <h3>📍 Venue</h3>
+                    <p>Casa Blanca Cafe, Jodhpur</p>
+                </div>
+
+                <div class="card">
+                    <h3>🎟 Seats</h3>
+                    <p>Limited 15–20 Participants</p>
+                </div>
+
+            </div>
+
+            <div class="price-box">
+
+                <p class="old">₹1299/-</p>
+
+                <div class="new">
+                    ₹999/-
+                </div>
+
+                <p style="margin-top:12px;color:#f7ead0;">
+                    Introductory Energy Exchange Offer
+                </p>
+
+            </div>
+
+            <div class="benefits">
+
+                <h2>Benefits of the Session</h2>
+
+                <div class="benefit-grid">
+
+                    <div class="benefit">
+                        <span>🌿</span>
+                        Deep Relaxation
+                    </div>
+
+                    <div class="benefit">
+                        <span>🧘</span>
+                        Stress & Anxiety Relief
+                    </div>
+
+                    <div class="benefit">
+                        <span>🌙</span>
+                        Better Sleep Quality
+                    </div>
+
+                    <div class="benefit">
+                        <span>💛</span>
+                        Emotional Balance
+                    </div>
+
+                    <div class="benefit">
+                        <span>✨</span>
+                        Mental Clarity & Calmness
+                    </div>
+
+                    <div class="benefit">
+                        <span>🎶</span>
+                        Nervous System Relaxation
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="cta">
+                <a href="https://wa.me/919173243337" target="_blank">
+                    Book Your Slot on WhatsApp
+                </a>
+            </div>
+
+        </div>
+
+    </section>
+
+    <footer>
+
+        <h3>Dr. Garvita Vyas</h3>
+
+        <p>
+            Inner Worth Wellness 🌸
+        </p>
+
+    </footer>
+
+</body>
+
+</html>

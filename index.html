@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wellness Workshop Invitation - 3D Experience</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Montserrat:wght@300;400;500;600&display=swap');
+
+        :root {
+            --primary: #A3B899;
+            /* Lighter Sage green for dark theme */
+            --secondary: #F4C4A3;
+            --bg-color: #030504;
+            /* Very dark background for glowing effect */
+            --text-dark: #EBE5DB;
+            /* Light text */
+            --text-light: #FDFBF7;
+            --gold: #D4AF37;
+        }
+
+        body,
+        html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            min-height: 100vh;
+            font-family: 'Montserrat', sans-serif;
+            background: radial-gradient(circle at center, #1B2620 0%, var(--bg-color) 100%);
+            overflow-x: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #bg-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+        }
+
+        .container {
+            position: relative;
+            z-index: 1;
+            perspective: 1000px;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            padding: 40px 15px;
+            box-sizing: border-box;
+        }
+
+        .card {
+            width: 100%;
+            max-width: 420px;
+            box-sizing: border-box;
+            background: rgba(10, 15, 12, 0.5);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            border: 1px solid rgba(163, 184, 153, 0.2);
+            border-radius: 30px;
+            padding: 45px 35px;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.7), inset 0 0 20px rgba(163, 184, 153, 0.05);
+            transform-style: preserve-3d;
+            text-align: center;
+            color: var(--text-dark);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '🪷';
+            position: absolute;
+            font-size: 250px;
+            opacity: 0.03;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) translateZ(-30px);
+            pointer-events: none;
+        }
+
+        .heading {
+            font-family: 'Cinzel', serif;
+            font-size: 1.3rem;
+            color: var(--primary);
+            margin-bottom: 12px;
+            transform: translateZ(40px);
+            font-weight: 600;
+            line-height: 1.4;
+        }
+
+        .subheading {
+            font-size: 0.95rem;
+            font-weight: 400;
+            margin-bottom: 30px;
+            transform: translateZ(30px);
+            color: #A3B899;
+        }
+
+        .details {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 20px 25px;
+            margin-bottom: 25px;
+            transform: translateZ(50px);
+            text-align: left;
+            font-size: 0.9rem;
+            line-height: 1.7;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .details p {
+            margin: 6px 0;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .price-tag {
+            background: linear-gradient(135deg, #D4AF37, #F3E5AB);
+            color: #4A3E15;
+            padding: 12px 25px;
+            border-radius: 30px;
+            display: inline-block;
+            font-weight: 600;
+            font-size: 1.15rem;
+            transform: translateZ(60px);
+            margin-bottom: 30px;
+            box-shadow: 0 15px 30px rgba(212, 175, 55, 0.2);
+        }
+
+        .price-tag span {
+            text-decoration: line-through;
+            font-size: 0.9rem;
+            opacity: 0.7;
+            margin-right: 8px;
+        }
+
+        .benefits {
+            text-align: left;
+            margin-bottom: 30px;
+            transform: translateZ(40px);
+            font-size: 0.85rem;
+        }
+
+        .benefits .title {
+            font-weight: 600;
+            margin-bottom: 15px;
+            text-align: center;
+            color: var(--primary);
+            font-family: 'Cinzel', serif;
+            letter-spacing: 1px;
+        }
+
+        .benefits ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .benefits li {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .footer {
+            transform: translateZ(30px);
+            font-size: 0.85rem;
+            border-top: 1px solid rgba(163, 184, 153, 0.2);
+            padding-top: 20px;
+            line-height: 1.6;
+        }
+
+        .footer strong {
+            display: block;
+            margin-top: 8px;
+            color: var(--primary);
+            font-size: 0.95rem;
+        }
+
+        .cta-btn {
+            display: inline-block;
+            margin-top: 20px;
+            background: linear-gradient(135deg, #D4AF37, #F3E5AB);
+            color: #4A3E15;
+            text-decoration: none;
+            padding: 14px 30px;
+            border-radius: 30px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            transform: translateZ(50px);
+            letter-spacing: 1px;
+            box-shadow: 0 10px 20px rgba(212, 175, 55, 0.2);
+        }
+
+        .cta-btn:hover {
+            background: linear-gradient(135deg, #F3E5AB, #D4AF37);
+            box-shadow: 0 15px 30px rgba(212, 175, 55, 0.4);
+            transform: translateZ(55px) scale(1.02);
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0px) translateZ(40px);
+            }
+
+            50% {
+                transform: translateY(-8px) translateZ(40px);
+            }
+
+            100% {
+                transform: translateY(0px) translateZ(40px);
+            }
+        }
+
+        .floating {
+            animation: float 4s ease-in-out infinite;
+        }
+
+        /* Mobile Responsiveness */
+        @media (max-width: 480px) {
+            .card {
+                padding: 30px 20px;
+            }
+
+            .heading {
+                font-size: 1.15rem;
+            }
+
+            .subheading {
+                font-size: 0.85rem;
+                margin-bottom: 20px;
+            }
+
+            .benefits ul {
+                grid-template-columns: 1fr;
+            }
+
+            .price-tag {
+                font-size: 1rem;
+                padding: 10px 20px;
+            }
+
+            .card::before {
+                font-size: 180px;
+            }
+        }
+
+        /* Modal Styles */
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(10px);
+            z-index: 100;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+            opacity: 1;
+        }
+
+        .modal-box {
+            background: rgba(15, 20, 18, 0.85);
+            border: 1px solid rgba(163, 184, 153, 0.3);
+            border-radius: 20px;
+            padding: 30px;
+            width: 90%;
+            max-width: 400px;
+            text-align: center;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.8);
+            transform: translateY(20px);
+            transition: transform 0.3s ease;
+            position: relative;
+        }
+
+        .modal-overlay.active .modal-box {
+            transform: translateY(0);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 15px; right: 20px;
+            color: var(--primary);
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .modal-close:hover {
+            color: #fff;
+        }
+
+        .modal-title {
+            font-family: 'Cinzel', serif;
+            color: var(--primary);
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 0.85rem;
+            color: var(--text-dark);
+        }
+
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 12px 15px;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(163, 184, 153, 0.2);
+            color: #fff;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.95rem;
+            box-sizing: border-box;
+            outline: none;
+            transition: border 0.3s ease;
+        }
+
+        .form-group input:focus, .form-group select:focus {
+            border-color: var(--primary);
+        }
+        
+        .form-group select option {
+            background: #1B2620;
+            color: #fff;
+        }
+    </style>
+</head>
+
+<body>
+
+    <canvas id="bg-canvas"></canvas>
+
+    <div class="container">
+        <div class="card" data-tilt data-tilt-max="12" data-tilt-speed="400" data-tilt-glare data-tilt-max-glare="0.3">
+            <div class="heading floating">✨ Jodhpur, Get Ready for a Deeply Relaxing Experience ✨</div>
+            <div class="subheading">Experience Sound Therapy with Progressive Muscle Relaxation</div>
+
+            <div class="details">
+                <p>🗓️ <strong>Date:</strong> 17th May</p>
+                <p>⏰ <strong>Time:</strong> 8:30 PM – 10:30 PM</p>
+                <p>📍 <strong>Venue:</strong> Casa Blanca Cafe, Jodhpur</p>
+                <p>🎟️ <strong>Seats:</strong> Only 15–20 Participants</p>
+            </div>
+
+            <div class="price-tag">
+                <span>₹1299</span> ₹999 Only
+            </div>
+
+            <div class="benefits">
+                <div class="title">You will experience:</div>
+                <ul>
+                    <li>✨ Deep Relaxation</li>
+                    <li>✨ Stress Relief</li>
+                    <li>✨ Better Sleep</li>
+                    <li>✨ Emotional Balance</li>
+                    <li>✨ Mental Clarity</li>
+                    <li>✨ Calm Nerves</li>
+                </ul>
+            </div>
+
+            <div class="footer">
+                DM to book your slot now<br>
+                WhatsApp: <strong>+91 9173243337</strong>
+                <strong>Dr. Garvita Vyas | Inner Worth Wellness 🌸</strong>
+                <button id="openModalBtn" class="cta-btn" style="border:none; cursor:pointer; font-family:inherit;">Book My Slot</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Booking Modal -->
+    <div id="bookingModal" class="modal-overlay">
+        <div class="modal-box">
+            <div id="closeModalBtn" class="modal-close">&times;</div>
+            <div class="modal-title">Complete Your Booking</div>
+            <div class="form-group">
+                <label for="userName">Full Name</label>
+                <input type="text" id="userName" placeholder="Enter your name" required>
+            </div>
+            <div class="form-group">
+                <label for="timeSlot">Timing Slot</label>
+                <select id="timeSlot" required>
+                    <option value="8:30 PM - 10:30 PM" selected>8:30 PM - 10:30 PM (17th May)</option>
+                </select>
+            </div>
+            <button id="submitBookingBtn" class="cta-btn" style="border:none; cursor:pointer; width:100%; font-family:inherit;">Book My Slot On WhatsApp</button>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.0/vanilla-tilt.min.js"></script>
+
+    <!-- Background 3D Audio Waves Script for Healing Aura Effect -->
+    <script>
+        const canvas = document.getElementById('bg-canvas');
+        const ctx = canvas.getContext('2d');
+
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        const waves = [];
+        // Cyan and Blue (from the 3D Audio reference image) blended with Gold and Sage (healing vibe)
+        const colors = ['#00D4FF', '#2979FF', '#D4AF37', '#A3B899', '#8C52FF'];
+
+        class SoundWave {
+            constructor(x, y, color, angle) {
+                this.x = x;
+                this.y = y;
+                this.radius = 5;
+                // Max radius based on screen size so it expands well
+                this.maxRadius = Math.random() * 400 + window.innerWidth * 0.3;
+                this.speed = Math.random() * 1.5 + 0.8;
+                this.color = color;
+                this.alpha = 1;
+                this.angle = angle;
+                this.thickness = Math.random() * 5 + 2;
+            }
+
+            update() {
+                this.radius += this.speed;
+                // Fade out smoothly towards the max radius
+                this.alpha = 1 - Math.pow(this.radius / this.maxRadius, 1.2);
+                if (this.alpha < 0) this.alpha = 0;
+            }
+
+            draw() {
+                if (this.alpha <= 0) return;
+                ctx.save();
+                ctx.globalAlpha = this.alpha;
+                ctx.translate(this.x, this.y);
+                ctx.rotate(this.angle);
+                ctx.beginPath();
+                // 3D disk perspective (squashed ellipse like sound ripples)
+                ctx.ellipse(0, 0, this.radius, this.radius * 0.35, 0, 0, Math.PI * 2);
+
+                ctx.strokeStyle = this.color;
+                ctx.lineWidth = this.thickness;
+                // Strong glowing effect
+                ctx.shadowBlur = 30;
+                ctx.shadowColor = this.color;
+                ctx.stroke();
+
+                // Subtle inner glow
+                ctx.fillStyle = this.color;
+                ctx.globalAlpha = this.alpha * 0.08;
+                ctx.fill();
+
+                ctx.restore();
+            }
+        }
+
+        // predefined nodes representing "3D speakers / singing bowls" in the background
+        let nodes = [];
+        function initNodes() {
+            nodes = [
+                { x: canvas.width * 0.5, y: canvas.height * 0.5, angle: 0 },
+                { x: canvas.width * 0.15, y: canvas.height * 0.25, angle: 0.25 },
+                { x: canvas.width * 0.85, y: canvas.height * 0.75, angle: -0.25 },
+                { x: canvas.width * 0.85, y: canvas.height * 0.25, angle: -0.5 },
+                { x: canvas.width * 0.15, y: canvas.height * 0.75, angle: 0.5 },
+                { x: canvas.width * 0.5, y: canvas.height * 0.1, angle: 0 },
+                { x: canvas.width * 0.5, y: canvas.height * 0.9, angle: 0 }
+            ];
+        }
+        initNodes();
+
+        let frameCount = 0;
+
+        function animate() {
+            // Apply a slight trail effect to make the glow smoother and leave a slight resonance trail
+            ctx.fillStyle = 'rgba(3, 5, 4, 0.4)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            // Create new sound wave periodically
+            if (frameCount % 30 === 0) {
+                // Focus more waves on the center node (index 0)
+                let nodeIndex = Math.random() > 0.5 ? 0 : Math.floor(Math.random() * nodes.length);
+                const node = nodes[nodeIndex];
+                const color = colors[Math.floor(Math.random() * colors.length)];
+                waves.push(new SoundWave(node.x, node.y, color, node.angle));
+            }
+
+            for (let i = waves.length - 1; i >= 0; i--) {
+                waves[i].update();
+                waves[i].draw();
+                if (waves[i].alpha <= 0) {
+                    waves.splice(i, 1);
+                }
+            }
+
+            frameCount++;
+            requestAnimationFrame(animate);
+        }
+
+        animate();
+
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            initNodes();
+        });
+
+        // Modal Logic
+        const modal = document.getElementById('bookingModal');
+        const openBtn = document.getElementById('openModalBtn');
+        const closeBtn = document.getElementById('closeModalBtn');
+        const submitBtn = document.getElementById('submitBookingBtn');
+        const userNameInput = document.getElementById('userName');
+        const timeSlotInput = document.getElementById('timeSlot');
+
+        openBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            modal.classList.add('active');
+        });
+
+        closeBtn.addEventListener('click', () => {
+            modal.classList.remove('active');
+        });
+
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                modal.classList.remove('active');
+            }
+        });
+
+        submitBtn.addEventListener('click', () => {
+            const name = userNameInput.value.trim();
+            const slot = timeSlotInput.value;
+            
+            if (!name) {
+                alert('Please enter your name');
+                return;
+            }
+
+            const message = `Hello, I am ${name}. I would like to book a slot for the Sound Therapy session on 17th May. Timing: ${slot}.`;
+            const encodedMessage = encodeURIComponent(message);
+            const whatsappUrl = `https://wa.me/919173243337?text=${encodedMessage}`;
+            
+            window.open(whatsappUrl, '_blank');
+            modal.classList.remove('active');
+        });
+    </script>
+</body>
+
+</html>
